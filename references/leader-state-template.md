@@ -2,7 +2,7 @@
 
 Use this compact record while coordinating a thread team.
 
-Persist it to `.thread-team/state.md` under the repo root, kept out of commits via the exclude file located by `git rev-parse --git-path info/exclude` (in a linked worktree `.git` is a file, so do not hardcode `.git/info/exclude`). Update it immediately after every state change. After compaction or interruption, reread this file before acting.
+Persist it to `.thread-team/<leader-thread-id>/state.md` under the repo root (one directory per run, keyed by leader thread ID), kept out of commits via the exclude file located by `git rev-parse --git-path info/exclude` (in a linked worktree `.git` is a file, so do not hardcode `.git/info/exclude`). Update it immediately after every state change. After compaction or interruption, re-derive the path from your own leader thread ID and reread this file before acting.
 
 ```md
 Thread-team leader state.
@@ -11,9 +11,9 @@ Leader thread ID:
 Integration branch:
 Repo path:
 User objective:
-Worker runtime settings:
-- Model: gpt-5.4
-- Thinking: high
+Worker runtime settings (as confirmed by the user; defaults: gpt-5.4 / high):
+- Model: <confirmed-model>
+- Thinking: <confirmed-thinking>
 
 Team roster:
 | Role | Thread ID | Branch | Working directory | Responsibility | Startup | Status |
@@ -39,17 +39,17 @@ Polling state:
 - Stall watch: <worker: passes with no activity, or none>
 
 Worker reports:
-- <worker>: pending/received, commit <sha>
+- <worker>: pending/received, commit <sha>, report <worktree-path>/.thread-team/report.md
 
 Merge order:
 1. <worker branch>
 2. <worker branch>
 
 Integration log:
-- <branch>: <merge result> / <per-merge verification result>
+- <branch>: <pre-merge review result> / <merge result> / <per-merge verification result>
 
 Final review:
-- pending/complete
+- pending/complete/aborted (<reason>)
 
 Cleanup:
 - Heartbeat automation deleted: yes/no/n-a
